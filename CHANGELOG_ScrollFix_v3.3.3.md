@@ -1,0 +1,1 @@
+full contents of CHANGELOG_ScrollFix_v3.3.3.md

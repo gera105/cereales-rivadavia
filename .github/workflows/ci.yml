@@ -1,0 +1,51 @@
+# ===============================================
+# 🚀 CI/CD WORKFLOW — CEREALES RIVADAVIA
+# Ejecuta pruebas, build y despliegue automático a Firebase Hosting
+# ===============================================
+
+name: CI/CD - Cereales Rivadavia
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      # --- 1️⃣ Checkout del código fuente ---
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      # --- 2️⃣ Configurar Node.js ---
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'npm'
+
+      # --- 3️⃣ Instalar dependencias ---
+      - name: Install dependencies
+        run: npm ci
+
+      # --- 4️⃣ Ejecutar pruebas unitarias ---
+      - name: Run tests
+        run: npm run test -- --run
+
+      # --- 5️⃣ Construir la aplicación ---
+      - name: Build project
+        run: npm run build
+
+      # --- 6️⃣ Desplegar en Firebase Hosting ---
+      - name: Deploy to Firebase Hosting
+        uses: FirebaseExtended/action-hosting-deploy@v0
+        with:
+          repoToken: "${{ secrets.GITHUB_TOKEN }}"
+          firebaseServiceAccount: "${{ secrets.FIREBASE_SERVICE_ACCOUNT_CEREALES }}"
+          channelId: live
+          projectId: cereales-rivadavia

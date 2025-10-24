@@ -1,0 +1,5 @@
+{
+  "name": "Cereales Rivadavia",
+  "description": "A web application for managing cereal trading operations, including truck registration, pricing, commissions, liquidations, and operation history.",
+  "requestFramePermissions": []
+}

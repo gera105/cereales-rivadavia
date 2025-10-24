@@ -1,0 +1,16 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // 🔐 Acceso solo a usuarios autenticados
+    match /{document=**} {
+      allow read, write: if request.auth != null;
+    }
+
+    // ✅ Permitir operaciones simuladas o temporales
+    match /test/{document=**} {
+      allow read, write: if true;
+    }
+  }
+}
